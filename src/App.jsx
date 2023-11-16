@@ -2,7 +2,8 @@ import './App.css'
 import * as Tone from 'tone'
 import { useState, useEffect } from 'react'
 import { meg } from './scripts/notes';
-import { playNotes } from './scripts/playNotes';
+import { playNotes, playMidi } from './scripts/playNotes';
+import { loadMidi } from './scripts/loadMidi.js'
 
 function App() {
 
@@ -21,7 +22,7 @@ function App() {
 		}).toDestination());
 	},[])
 
-	const music = () =>{
+	const music1 = () =>{
 		
 		
 		Tone.loaded().then(() => {
@@ -31,10 +32,22 @@ function App() {
 			});
 		
 		}
+	
+		const music2 = () =>{
+		
+		
+			Tone.loaded().then(() => {
+				Tone.Transport.bpm.value = 150;
+				playMidi(loadMidi(0), sampler);
+				console.log("sound");
+				});
+			
+			}
 
   return (
     <>
-      <button onClick={music}>music make me lose control</button>
+		<button onClick={music1}>music make me lose control</button>
+		<button onClick={music2}>egg</button>
     </>
   )
 }

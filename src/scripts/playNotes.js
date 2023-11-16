@@ -11,4 +11,16 @@ const playNotes = (notes, instrument) => {
     })
 }
 
-export {playNotes}
+const playMidi = async (midi, instrument) => {
+    console.log(midi);
+    const notes = midi.tracks[1].notes;
+    const now = Tone.Time()
+    notes.forEach(note => {
+        if (note !== '') {
+            instrument.triggerAttackRelease(note.name, note.duration, now + note.time)
+        }
+    })
+}
+
+
+export {playNotes, playMidi}
