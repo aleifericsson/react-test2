@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react'
 import { meg } from './scripts/notes';
 import { playNotes, playMidi } from './scripts/playNotes';
 import { loadMidi } from './scripts/loadMidi.js'
+import {Canvas} from './Canvas.jsx'
+import Spritesheet from 'react-responsive-spritesheet';
 
 function App() {
 
@@ -48,6 +50,19 @@ function App() {
     <>
 		<button onClick={music1}>music make me lose control</button>
 		<button onClick={music2}>egg</button>
+		<div style={{height:100, width:100}}>
+		<Spritesheet
+          className={`my-element__class--style`}
+          image={`https://raw.githubusercontent.com/danilosetra/react-responsive-spritesheet/master/assets/images/examples/sprite-image-horizontal.png`}
+          widthFrame={420}
+          heightFrame={500}
+          steps={14}
+          fps={10}
+          autoplay={true}
+          loop={true}
+        />
+    </div>
+		<Canvas />
     </>
   )
 }
