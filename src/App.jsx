@@ -62,7 +62,7 @@ function App() {
           loop={true}
         />
     </div>
-		<Canvas />
+		<Canvas width={1000} height={500} />
     </>
   )
 }

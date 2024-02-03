@@ -1,54 +1,71 @@
-import { Player } from "./Player"
-import { Weapon } from "./Weapon"
-import { useEffect, useState } from "react"
+/* eslint-disable react/prop-types */
+import { Player } from "./Player";
+import { Weapon } from "./Weapon";
+import { useEffect, useState } from "react";
 
-function Canvas() {
-    const [text,setText] = useState("text")
-    const [x,setX] = useState(0)
-    const [y,setY] = useState(0)
+function Canvas({width,height}) {
+    const [text,setText] = useState("text");
+    const [x,setX] = useState(0);
+    const [y,setY] = useState(0);
+    const speed = 5;
 
     useEffect(() => {
-        const handleKeyup = ({ key }) => {
-            console.log('key pressed - ', key)
+        const handleKeydown = ({ key }) => {
+            console.log('key pressed - ', key);
     
             if (key === 'Backspace') {
-            setText(prev => prev.slice(0, -1))
-            return
+                setText(prev => prev.slice(0, -1));
+                return;
             }
             if (key === 'ArrowRight') { 
-                if(x<1000)
-                {setX(prev => prev + 5)
-                return}
+                {setX(prev => {if(prev<100){
+                    return prev + speed;
+                }
+                else{
+                    return prev;  
+                }})
+                }
             }
             if (key === 'ArrowLeft') {
-                if(x>0) //FIX THIS
-                {setX(prev => prev - 5)
-                return}
+                {setX(prev => {if(prev>0){
+                    return prev - speed;
+                }
+                else{
+                    return prev;  
+                }})
+                }
             }
             if (key === 'ArrowDown') {
-                if(y<1000)
-                {setY(prev => prev + 5)
-                return}
+                {setY(prev => {if(prev<100){
+                    return prev + speed;
+                }
+                else{
+                    return prev; 
+                }})
+                }
             }
             if (key === 'ArrowUp') {
-                if(y>0)
-                {setY(prev => prev - 5)
-                return}
+                {setY(prev => {if(prev>0){
+                    return prev - speed;
+                }
+                else{
+                    return prev;
+                }})
+                }
             }
             if (/^[A-Za-z0-9]$/.test(key)) {
-                setText(prev => prev + key)
+                setText(prev => prev + key);
             }
         }
-
-        window.addEventListener('keydown', handleKeyup)
+        window.addEventListener('keydown', handleKeydown);
     
-        return () => window.removeEventListener('keydown', handleKeyup)
+        return () => {window.removeEventListener('keydown', handleKeydown);}
       }, [])
 
   return (
     <div style={{
-        height:1000, 
-        width:1000,
+        height, 
+        width,
         border:"5px solid black",
         position:"relative",
         }}>

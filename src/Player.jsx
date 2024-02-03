@@ -3,6 +3,8 @@ import Spritesheet from 'react-responsive-spritesheet';
 
 
 function Player({x,y}) {
+    const left = x.toString() + "%";
+    const top = y.toString() + "%";
 
     return (
       <div style={{
@@ -10,8 +12,8 @@ function Player({x,y}) {
         width:100,
         border:"1px solid black",
         position:"absolute",
-        left: x,
-        top:y,
+        left,
+        top,
         }}>
 
         <Spritesheet
