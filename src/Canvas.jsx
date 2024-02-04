@@ -1,24 +1,46 @@
 /* eslint-disable react/prop-types */
-import { Player } from "./Player";
-import { Weapon } from "./Weapon";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef  } from "react";
 
 function Canvas({width,height}) {
-    const [text,setText] = useState("text");
     const [x,setX] = useState(0);
     const [y,setY] = useState(0);
-    const speed = 5;
+    const speed = 20;
+    
+
+    const canvasRef = useRef(null)
 
     useEffect(() => {
-        const handleKeydown = ({ key }) => {
-            console.log('key pressed - ', key);
-    
-            if (key === 'Backspace') {
-                setText(prev => prev.slice(0, -1));
-                return;
+        const draw = (ctx, frameCount) => {
+            ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
+            ctx.fillStyle = '#000000'
+            ctx.beginPath()
+            ctx.arc(50, 100, 20*Math.sin(frameCount*0.05)**2, 0, 2*Math.PI)
+            ctx.fill()
+        }
+        const draw2 = (ctx) =>{
+            ctx.fillStyle = 'red';
+            ctx.fillRect(x, y, 64, 64);
+        }
+
+        var c = document.getElementById("myCanvas");
+            var ctx = c.getContext("2d");
+
+            let frameCount = 0
+            let animationFrameId = 0
+            
+            //Our draw came here
+            const render = () => {
+              frameCount++
+              draw(ctx, frameCount)
+              draw2(ctx)
+              animationFrameId = window.requestAnimationFrame(render)
             }
-            if (key === 'ArrowRight') { 
-                {setX(prev => {if(prev<100){
+            render()
+
+
+        const handleKeydown = ({ key }) => {
+            if (key === 'd') { 
+                {setX(prev => {if(prev<640-64){
                     return prev + speed;
                 }
                 else{
@@ -26,7 +48,7 @@ function Canvas({width,height}) {
                 }})
                 }
             }
-            if (key === 'ArrowLeft') {
+            if (key === 'a') {
                 {setX(prev => {if(prev>0){
                     return prev - speed;
                 }
@@ -35,8 +57,8 @@ function Canvas({width,height}) {
                 }})
                 }
             }
-            if (key === 'ArrowDown') {
-                {setY(prev => {if(prev<100){
+            if (key === 's') {
+                {setY(prev => {if(prev<640-64){
                     return prev + speed;
                 }
                 else{
@@ -44,7 +66,7 @@ function Canvas({width,height}) {
                 }})
                 }
             }
-            if (key === 'ArrowUp') {
+            if (key === 'w') {
                 {setY(prev => {if(prev>0){
                     return prev - speed;
                 }
@@ -53,26 +75,16 @@ function Canvas({width,height}) {
                 }})
                 }
             }
-            if (/^[A-Za-z0-9]$/.test(key)) {
-                setText(prev => prev + key);
-            }
         }
         window.addEventListener('keydown', handleKeydown);
     
-        return () => {window.removeEventListener('keydown', handleKeydown);}
-      }, [])
+        return () => {window.removeEventListener('keydown', handleKeydown);
+        window.cancelAnimationFrame(animationFrameId)}
+      }, [ x, y])
 
   return (
-    <div style={{
-        height, 
-        width,
-        border:"5px solid black",
-        position:"relative",
-        }}>
-            <p>{text}</p>
-		<Player x={x} y={y}/>
-		<Weapon />
-    </div>
+    <canvas id="myCanvas" width={width} height={height} style={{ border: "1px solid #d3d3d3" }} ref={canvasRef}>
+    </canvas>
   )
 }
 

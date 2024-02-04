@@ -4,8 +4,9 @@ import { useState, useEffect } from 'react'
 import { meg } from './scripts/notes';
 import { playNotes, playMidi } from './scripts/playNotes';
 import { loadMidi } from './scripts/loadMidi.js'
-import {Canvas} from './Canvas.jsx'
+import {Grid} from './Grid.jsx'
 import Spritesheet from 'react-responsive-spritesheet';
+import { Canvas } from './Canvas.jsx';
 
 function App() {
 
@@ -62,7 +63,8 @@ function App() {
           loop={true}
         />
     </div>
-		<Canvas width={1000} height={500} />
+		<Grid width={640} height={640} />
+		<Canvas width={640} height={640} />
     </>
   )
 }

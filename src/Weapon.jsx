@@ -5,8 +5,8 @@ function Weapon() {
 
     return (
       <div style={{
-        height:100, 
-        width:100,
+        height:64, 
+        width:64,
         border:"1px solid black",
         position:"absolute"
         }}>
